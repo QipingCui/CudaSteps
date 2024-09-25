@@ -74,7 +74,7 @@ CUDA 采用 nvcc 作为编译器，支持 C++ 代码；nvcc 在编译 CUDA 程�
 
 ## CUDA 的线程组织
 
-核函数的总线程数必须至少等于计算核心数时才有可能充分利用 GPU 的全部计算资源。  
+核函数的总线程数大于计算核心数时才能充分利用 GPU 的全部计算资源。  
 
     hello_from_gpu<<<2, 4>>>
 
@@ -123,7 +123,7 @@ CUDA 采用 nvcc 作为编译器，支持 C++ 代码；nvcc 在编译 CUDA 程�
 
 ## CUDA 的头文件
 
-CUDA 头文件的后缀一般是 “.cuh”；同时，同时可以包含c/cpp 的头文件 “.h”、“.hpp”，采用 nvcc 编译器会自动包含必要的 cuda 头文件，  
+CUDA 头文件的后缀一般是 “.cuh”，同时可以包含c/cpp 的头文件 “.h”、“.hpp”；采用 nvcc 编译器会自动包含必要的 cuda 头文件，  
 如 <cuda.h>, <cuda_runtime.h>，同时前者也包含了c++头文件 <stdlib.h>。
 
 ------
@@ -137,7 +137,7 @@ nvcc 会先将设备代码编译为 PTX（parrallel thread execution）伪汇编
 需要选项 `-code=sm_ZW` 指定一个真实架构的计算能力，以确定可执行文件能够使用的 GPU。
 
 
-真实架构的计算能力必须大于等于虚拟架构的计算能力，例如： 
+***真实架构的计算能力必须大于等于虚拟架构的计算能力***，例如： 
 
     -arch=compute_35  -code=sm_60  (right)
     -arch=compute_60  -code=sm_35  (wrong)
