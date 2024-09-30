@@ -1,7 +1,7 @@
 #include "common/error.cuh"
 
 
-// 静态全局内存变量(设备内存)。  
+// 静态全局内存变量（设备内存）。  
 __device__ int d_x = 1;
 __device__ int d_y[2] = {2, 3};
 
