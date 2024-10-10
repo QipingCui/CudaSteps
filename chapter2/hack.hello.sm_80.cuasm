@@ -1,0 +1,648 @@
+// --------------------- FileHeader --------------------------
+	// All file header info is kept as is (unless offset/size attributes)
+	// The original header flags is not complete, thus discarded. 
+	// 	.headerflags	@"EF_CUDA_TEXMODE_UNIFIED EF_CUDA_64BIT_ADDRESS EF_CUDA_SM80 EF_CUDA_VIRTUAL_SM(EF_CUDA_SM80)"
+	// 	.elftype	@"ET_EXEC"
+	// 
+	// 
+	.__elf_ident_osabi      51
+	.__elf_ident_abiversion 7
+	.__elf_type             ET_EXEC
+	.__elf_machine          EM_CUDA
+	.__elf_version          117 		// CUDA toolkit version 
+	.__elf_entry            0 		// entry point address 
+	.__elf_phoff            0x0 		// program header offset, maybe updated by assembler
+	.__elf_shoff            0x9c0 		// section header offset, maybe updated by assembler
+	.__elf_flags            0x500550 		// Flags, SM_80(0x50), COMPUTE_80(0x50) 
+	.__elf_ehsize           64 		// elf header size 
+	.__elf_phentsize        0 		// program entry size
+	.__elf_phnum            0 		// number of program entries
+	.__elf_shentsize        64 		// section entry size
+	.__elf_shnum            14 		// number of sections, currently no sections can be appended/removed
+	.__elf_shstrndx         1 		// Section name string table index 
+
+
+  //-------------------------------------------------
+  //------------ END of FileHeader ------------------
+  //-------------------------------------------------
+
+
+
+// ---------------------                                  --------------------------
+	// there will always be an empty section at index 0
+	.section  "", 0, SHT_NULL
+	.__section_name         0x0 	// offset in .shstrtab
+	.__section_type         SHT_NULL
+	.__section_flags        0x0
+	.__section_addr         0x0
+	.__section_offset       0x0 	// maybe updated by assembler
+	.__section_size         0x0 	// maybe updated by assembler
+	.__section_link         0
+	.__section_info         0x0
+	.__section_entsize      0
+	.align                0 	// equivalent to set sh_addralign
+
+// --------------------- .shstrtab                        --------------------------
+	.section  ".shstrtab", 0, SHT_STRTAB
+	// all strings in .shstrtab section will be kept as is.
+	.__section_name         0x1 	// offset in .shstrtab
+	.__section_type         SHT_STRTAB
+	.__section_flags        0x0
+	.__section_addr         0x0
+	.__section_offset       0x40 	// maybe updated by assembler
+	.__section_size         0x136 	// maybe updated by assembler
+	.__section_link         0
+	.__section_info         0x0
+	.__section_entsize      0
+	.align                1 	// equivalent to set sh_addralign
+    // .shstrtab[0] = b'\x00' 
+    /*0000*/ .byte 0x00
+
+    // .shstrtab[1] = b'.shstrtab\x00' 
+    /*0001*/ .byte 0x2e, 0x73, 0x68, 0x73, 0x74, 0x72, 0x74, 0x61
+    /*0009*/ .byte 0x62, 0x00
+
+    // .shstrtab[2] = b'.strtab\x00' 
+    /*000b*/ .byte 0x2e, 0x73, 0x74, 0x72, 0x74, 0x61, 0x62, 0x00
+
+    // .shstrtab[3] = b'.symtab\x00' 
+    /*0013*/ .byte 0x2e, 0x73, 0x79, 0x6d, 0x74, 0x61, 0x62, 0x00
+
+    // .shstrtab[4] = b'.symtab_shndx\x00' 
+    /*001b*/ .byte 0x2e, 0x73, 0x79, 0x6d, 0x74, 0x61, 0x62, 0x5f
+    /*0023*/ .byte 0x73, 0x68, 0x6e, 0x64, 0x78, 0x00
+
+    // .shstrtab[5] = b'.nv.info\x00' 
+    /*0029*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x69, 0x6e, 0x66, 0x6f
+    /*0031*/ .byte 0x00
+
+    // .shstrtab[6] = b'.text._Z14hell_from__gpuv\x00' 
+    /*0032*/ .byte 0x2e, 0x74, 0x65, 0x78, 0x74, 0x2e, 0x5f, 0x5a
+    /*003a*/ .byte 0x31, 0x34, 0x68, 0x65, 0x6c, 0x6c, 0x5f, 0x66
+    /*0042*/ .byte 0x72, 0x6f, 0x6d, 0x5f, 0x5f, 0x67, 0x70, 0x75
+    /*004a*/ .byte 0x76, 0x00
+
+    // .shstrtab[7] = b'.nv.info._Z14hell_from__gpuv\x00' 
+    /*004c*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x69, 0x6e, 0x66, 0x6f
+    /*0054*/ .byte 0x2e, 0x5f, 0x5a, 0x31, 0x34, 0x68, 0x65, 0x6c
+    /*005c*/ .byte 0x6c, 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x5f
+    /*0064*/ .byte 0x67, 0x70, 0x75, 0x76, 0x00
+
+    // .shstrtab[8] = b'.nv.shared._Z14hell_from__gpuv\x00' 
+    /*0069*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x73, 0x68, 0x61, 0x72
+    /*0071*/ .byte 0x65, 0x64, 0x2e, 0x5f, 0x5a, 0x31, 0x34, 0x68
+    /*0079*/ .byte 0x65, 0x6c, 0x6c, 0x5f, 0x66, 0x72, 0x6f, 0x6d
+    /*0081*/ .byte 0x5f, 0x5f, 0x67, 0x70, 0x75, 0x76, 0x00
+
+    // .shstrtab[9] = b'.nv.global.init\x00' 
+    /*0088*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x67, 0x6c, 0x6f, 0x62
+    /*0090*/ .byte 0x61, 0x6c, 0x2e, 0x69, 0x6e, 0x69, 0x74, 0x00
+
+    // .shstrtab[10] = b'.rel.text._Z14hell_from__gpuv\x00' 
+    /*0098*/ .byte 0x2e, 0x72, 0x65, 0x6c, 0x2e, 0x74, 0x65, 0x78
+    /*00a0*/ .byte 0x74, 0x2e, 0x5f, 0x5a, 0x31, 0x34, 0x68, 0x65
+    /*00a8*/ .byte 0x6c, 0x6c, 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x5f
+    /*00b0*/ .byte 0x5f, 0x67, 0x70, 0x75, 0x76, 0x00
+
+    // .shstrtab[11] = b'.rela.text._Z14hell_from__gpuv\x00' 
+    /*00b6*/ .byte 0x2e, 0x72, 0x65, 0x6c, 0x61, 0x2e, 0x74, 0x65
+    /*00be*/ .byte 0x78, 0x74, 0x2e, 0x5f, 0x5a, 0x31, 0x34, 0x68
+    /*00c6*/ .byte 0x65, 0x6c, 0x6c, 0x5f, 0x66, 0x72, 0x6f, 0x6d
+    /*00ce*/ .byte 0x5f, 0x5f, 0x67, 0x70, 0x75, 0x76, 0x00
+
+    // .shstrtab[12] = b'.nv.constant0._Z14hell_from__gpuv\x00' 
+    /*00d5*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x63, 0x6f, 0x6e, 0x73
+    /*00dd*/ .byte 0x74, 0x61, 0x6e, 0x74, 0x30, 0x2e, 0x5f, 0x5a
+    /*00e5*/ .byte 0x31, 0x34, 0x68, 0x65, 0x6c, 0x6c, 0x5f, 0x66
+    /*00ed*/ .byte 0x72, 0x6f, 0x6d, 0x5f, 0x5f, 0x67, 0x70, 0x75
+    /*00f5*/ .byte 0x76, 0x00
+
+    // .shstrtab[13] = b'.debug_frame\x00' 
+    /*00f7*/ .byte 0x2e, 0x64, 0x65, 0x62, 0x75, 0x67, 0x5f, 0x66
+    /*00ff*/ .byte 0x72, 0x61, 0x6d, 0x65, 0x00
+
+    // .shstrtab[14] = b'.rel.debug_frame\x00' 
+    /*0104*/ .byte 0x2e, 0x72, 0x65, 0x6c, 0x2e, 0x64, 0x65, 0x62
+    /*010c*/ .byte 0x75, 0x67, 0x5f, 0x66, 0x72, 0x61, 0x6d, 0x65
+    /*0114*/ .byte 0x00
+
+    // .shstrtab[15] = b'.rela.debug_frame\x00' 
+    /*0115*/ .byte 0x2e, 0x72, 0x65, 0x6c, 0x61, 0x2e, 0x64, 0x65
+    /*011d*/ .byte 0x62, 0x75, 0x67, 0x5f, 0x66, 0x72, 0x61, 0x6d
+    /*0125*/ .byte 0x65, 0x00
+
+    // .shstrtab[16] = b'.nv.rel.action\x00' 
+    /*0127*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x72, 0x65, 0x6c, 0x2e
+    /*012f*/ .byte 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x00
+
+
+// --------------------- .strtab                          --------------------------
+	.section  ".strtab", 0, SHT_STRTAB
+	// all strings in .strtab section will be kept as is.
+	.__section_name         0xb 	// offset in .shstrtab
+	.__section_type         SHT_STRTAB
+	.__section_flags        0x0
+	.__section_addr         0x0
+	.__section_offset       0x176 	// maybe updated by assembler
+	.__section_size         0x15d 	// maybe updated by assembler
+	.__section_link         0
+	.__section_info         0x0
+	.__section_entsize      0
+	.align                1 	// equivalent to set sh_addralign
+    // .strtab[0] = b'\x00' 
+    /*0000*/ .byte 0x00
+
+    // .strtab[1] = b'.shstrtab\x00' 
+    /*0001*/ .byte 0x2e, 0x73, 0x68, 0x73, 0x74, 0x72, 0x74, 0x61
+    /*0009*/ .byte 0x62, 0x00
+
+    // .strtab[2] = b'.strtab\x00' 
+    /*000b*/ .byte 0x2e, 0x73, 0x74, 0x72, 0x74, 0x61, 0x62, 0x00
+
+    // .strtab[3] = b'.symtab\x00' 
+    /*0013*/ .byte 0x2e, 0x73, 0x79, 0x6d, 0x74, 0x61, 0x62, 0x00
+
+    // .strtab[4] = b'.symtab_shndx\x00' 
+    /*001b*/ .byte 0x2e, 0x73, 0x79, 0x6d, 0x74, 0x61, 0x62, 0x5f
+    /*0023*/ .byte 0x73, 0x68, 0x6e, 0x64, 0x78, 0x00
+
+    // .strtab[5] = b'.nv.info\x00' 
+    /*0029*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x69, 0x6e, 0x66, 0x6f
+    /*0031*/ .byte 0x00
+
+    // .strtab[6] = b'_Z14hell_from__gpuv\x00' 
+    /*0032*/ .byte 0x5f, 0x5a, 0x31, 0x34, 0x68, 0x65, 0x6c, 0x6c
+    /*003a*/ .byte 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x5f, 0x67
+    /*0042*/ .byte 0x70, 0x75, 0x76, 0x00
+
+    // .strtab[7] = b'.text._Z14hell_from__gpuv\x00' 
+    /*0046*/ .byte 0x2e, 0x74, 0x65, 0x78, 0x74, 0x2e, 0x5f, 0x5a
+    /*004e*/ .byte 0x31, 0x34, 0x68, 0x65, 0x6c, 0x6c, 0x5f, 0x66
+    /*0056*/ .byte 0x72, 0x6f, 0x6d, 0x5f, 0x5f, 0x67, 0x70, 0x75
+    /*005e*/ .byte 0x76, 0x00
+
+    // .strtab[8] = b'.nv.info._Z14hell_from__gpuv\x00' 
+    /*0060*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x69, 0x6e, 0x66, 0x6f
+    /*0068*/ .byte 0x2e, 0x5f, 0x5a, 0x31, 0x34, 0x68, 0x65, 0x6c
+    /*0070*/ .byte 0x6c, 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x5f
+    /*0078*/ .byte 0x67, 0x70, 0x75, 0x76, 0x00
+
+    // .strtab[9] = b'.nv.shared._Z14hell_from__gpuv\x00' 
+    /*007d*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x73, 0x68, 0x61, 0x72
+    /*0085*/ .byte 0x65, 0x64, 0x2e, 0x5f, 0x5a, 0x31, 0x34, 0x68
+    /*008d*/ .byte 0x65, 0x6c, 0x6c, 0x5f, 0x66, 0x72, 0x6f, 0x6d
+    /*0095*/ .byte 0x5f, 0x5f, 0x67, 0x70, 0x75, 0x76, 0x00
+
+    // .strtab[10] = b'.nv.global.init\x00' 
+    /*009c*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x67, 0x6c, 0x6f, 0x62
+    /*00a4*/ .byte 0x61, 0x6c, 0x2e, 0x69, 0x6e, 0x69, 0x74, 0x00
+
+    // .strtab[11] = b'$str\x00' 
+    /*00ac*/ .byte 0x24, 0x73, 0x74, 0x72, 0x00
+
+    // .strtab[12] = b'vprintf\x00' 
+    /*00b1*/ .byte 0x76, 0x70, 0x72, 0x69, 0x6e, 0x74, 0x66, 0x00
+
+    // .strtab[13] = b'.rel.text._Z14hell_from__gpuv\x00' 
+    /*00b9*/ .byte 0x2e, 0x72, 0x65, 0x6c, 0x2e, 0x74, 0x65, 0x78
+    /*00c1*/ .byte 0x74, 0x2e, 0x5f, 0x5a, 0x31, 0x34, 0x68, 0x65
+    /*00c9*/ .byte 0x6c, 0x6c, 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x5f
+    /*00d1*/ .byte 0x5f, 0x67, 0x70, 0x75, 0x76, 0x00
+
+    // .strtab[14] = b'.rela.text._Z14hell_from__gpuv\x00' 
+    /*00d7*/ .byte 0x2e, 0x72, 0x65, 0x6c, 0x61, 0x2e, 0x74, 0x65
+    /*00df*/ .byte 0x78, 0x74, 0x2e, 0x5f, 0x5a, 0x31, 0x34, 0x68
+    /*00e7*/ .byte 0x65, 0x6c, 0x6c, 0x5f, 0x66, 0x72, 0x6f, 0x6d
+    /*00ef*/ .byte 0x5f, 0x5f, 0x67, 0x70, 0x75, 0x76, 0x00
+
+    // .strtab[15] = b'.nv.constant0._Z14hell_from__gpuv\x00' 
+    /*00f6*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x63, 0x6f, 0x6e, 0x73
+    /*00fe*/ .byte 0x74, 0x61, 0x6e, 0x74, 0x30, 0x2e, 0x5f, 0x5a
+    /*0106*/ .byte 0x31, 0x34, 0x68, 0x65, 0x6c, 0x6c, 0x5f, 0x66
+    /*010e*/ .byte 0x72, 0x6f, 0x6d, 0x5f, 0x5f, 0x67, 0x70, 0x75
+    /*0116*/ .byte 0x76, 0x00
+
+    // .strtab[16] = b'_SREG\x00' 
+    /*0118*/ .byte 0x5f, 0x53, 0x52, 0x45, 0x47, 0x00
+
+    // .strtab[17] = b'.debug_frame\x00' 
+    /*011e*/ .byte 0x2e, 0x64, 0x65, 0x62, 0x75, 0x67, 0x5f, 0x66
+    /*0126*/ .byte 0x72, 0x61, 0x6d, 0x65, 0x00
+
+    // .strtab[18] = b'.rel.debug_frame\x00' 
+    /*012b*/ .byte 0x2e, 0x72, 0x65, 0x6c, 0x2e, 0x64, 0x65, 0x62
+    /*0133*/ .byte 0x75, 0x67, 0x5f, 0x66, 0x72, 0x61, 0x6d, 0x65
+    /*013b*/ .byte 0x00
+
+    // .strtab[19] = b'.rela.debug_frame\x00' 
+    /*013c*/ .byte 0x2e, 0x72, 0x65, 0x6c, 0x61, 0x2e, 0x64, 0x65
+    /*0144*/ .byte 0x62, 0x75, 0x67, 0x5f, 0x66, 0x72, 0x61, 0x6d
+    /*014c*/ .byte 0x65, 0x00
+
+    // .strtab[20] = b'.nv.rel.action\x00' 
+    /*014e*/ .byte 0x2e, 0x6e, 0x76, 0x2e, 0x72, 0x65, 0x6c, 0x2e
+    /*0156*/ .byte 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x00
+
+
+// --------------------- .symtab                          --------------------------
+	.section  ".symtab", 0, SHT_SYMTAB
+	// all symbols in .symtab sections will be kept
+	// but the symbol size may be changed accordingly
+	.__section_name         0x13 	// offset in .shstrtab
+	.__section_type         SHT_SYMTAB
+	.__section_flags        0x0
+	.__section_addr         0x0
+	.__section_offset       0x2d8 	// maybe updated by assembler
+	.__section_size         0xd8 	// maybe updated by assembler
+	.__section_link         2
+	.__section_info         0x7
+	.__section_entsize      24
+	.align                8 	// equivalent to set sh_addralign
+    // Symbol[0] "": Container({'st_name': 0, 'st_info': Container({'bind': 'STB_LOCAL', 'type': 'STT_NOTYPE'}), 'st_other': Container({'local': 0, 'visibility': 'STV_DEFAULT'}), 'st_shndx': 'SHN_UNDEF', 'st_value': 0, 'st_size': 0})
+    /*0000*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    /*0008*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    /*0010*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+    // Symbol[1] ".text._Z14hell_from__gpuv": Container({'st_name': 70, 'st_info': Container({'bind': 'STB_LOCAL', 'type': 'STT_SECTION'}), 'st_other': Container({'local': 0, 'visibility': 'STV_DEFAULT'}), 'st_shndx': 12, 'st_value': 0, 'st_size': 0})
+    /*0018*/ .byte 0x46, 0x00, 0x00, 0x00, 0x03, 0x00, 0x0c, 0x00
+    /*0020*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    /*0028*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+    // Symbol[2] ".nv.global.init": Container({'st_name': 156, 'st_info': Container({'bind': 'STB_LOCAL', 'type': 'STT_SECTION'}), 'st_other': Container({'local': 0, 'visibility': 'STV_DEFAULT'}), 'st_shndx': 13, 'st_value': 0, 'st_size': 0})
+    /*0030*/ .byte 0x9c, 0x00, 0x00, 0x00, 0x03, 0x00, 0x0d, 0x00
+    /*0038*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    /*0040*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+    // Symbol[3] "$str": Container({'st_name': 172, 'st_info': Container({'bind': 'STB_LOCAL', 'type': 'STT_OBJECT'}), 'st_other': Container({'local': 0, 'visibility': 'STV_DEFAULT'}), 'st_shndx': 13, 'st_value': 0, 'st_size': 59})
+    /*0048*/ .byte 0xac, 0x00, 0x00, 0x00, 0x01, 0x00, 0x0d, 0x00
+    /*0050*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    /*0058*/ .byte 0x3b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+    // Symbol[4] ".nv.constant0._Z14hell_from__gpuv": Container({'st_name': 246, 'st_info': Container({'bind': 'STB_LOCAL', 'type': 'STT_SECTION'}), 'st_other': Container({'local': 0, 'visibility': 'STV_DEFAULT'}), 'st_shndx': 11, 'st_value': 0, 'st_size': 0})
+    /*0060*/ .byte 0xf6, 0x00, 0x00, 0x00, 0x03, 0x00, 0x0b, 0x00
+    /*0068*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    /*0070*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+    // Symbol[5] ".debug_frame": Container({'st_name': 286, 'st_info': Container({'bind': 'STB_LOCAL', 'type': 'STT_SECTION'}), 'st_other': Container({'local': 0, 'visibility': 'STV_DEFAULT'}), 'st_shndx': 4, 'st_value': 0, 'st_size': 0})
+    /*0078*/ .byte 0x1e, 0x01, 0x00, 0x00, 0x03, 0x00, 0x04, 0x00
+    /*0080*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    /*0088*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+    // Symbol[6] ".nv.rel.action": Container({'st_name': 334, 'st_info': Container({'bind': 'STB_LOCAL', 'type': 'STT_SECTION'}), 'st_other': Container({'local': 0, 'visibility': 'STV_DEFAULT'}), 'st_shndx': 7, 'st_value': 0, 'st_size': 0})
+    /*0090*/ .byte 0x4e, 0x01, 0x00, 0x00, 0x03, 0x00, 0x07, 0x00
+    /*0098*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    /*00a0*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+    // Symbol[7] "_Z14hell_from__gpuv": Container({'st_name': 50, 'st_info': Container({'bind': 'STB_GLOBAL', 'type': 'STT_FUNC'}), 'st_other': Container({'local': 0, 'visibility': 'STV_DEFAULT'}), 'st_shndx': 12, 'st_value': 0, 'st_size': 512})
+    /*00a8*/ .byte 0x32, 0x00, 0x00, 0x00, 0x12, 0x10, 0x0c, 0x00
+    /*00b0*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    /*00b8*/ .byte 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+    // Symbol[8] "vprintf": Container({'st_name': 177, 'st_info': Container({'bind': 'STB_GLOBAL', 'type': 'STT_FUNC'}), 'st_other': Container({'local': 0, 'visibility': 'STV_DEFAULT'}), 'st_shndx': 'SHN_UNDEF', 'st_value': 0, 'st_size': 0})
+    /*00c0*/ .byte 0xb1, 0x00, 0x00, 0x00, 0x12, 0x00, 0x00, 0x00
+    /*00c8*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    /*00d0*/ .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+
+// --------------------- .debug_frame                     --------------------------
+	.section	.debug_frame,"",@progbits
+	.__section_name         0xf7 	// offset in .shstrtab
+	.__section_type         SHT_PROGBITS
+	.__section_flags        0x0
+	.__section_addr         0x0
+	.__section_offset       0x3b0 	// maybe updated by assembler
+	.__section_size         0x70 	// maybe updated by assembler
+	.__section_link         0
+	.__section_info         0x0
+	.__section_entsize      0
+	.align                1 	// equivalent to set sh_addralign
+  .debug_frame:
+          /*0000*/ 	.byte	0xff, 0xff, 0xff, 0xff, 0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
+          /*0010*/ 	.byte	0xff, 0xff, 0xff, 0xff, 0x03, 0x00, 0x04, 0x7c, 0xff, 0xff, 0xff, 0xff, 0x0f, 0x0c, 0x81, 0x80
+          /*0020*/ 	.byte	0x80, 0x28, 0x00, 0x08, 0xff, 0x81, 0x80, 0x28, 0x08, 0x81, 0x80, 0x80, 0x28, 0x00, 0x00, 0x00
+          /*0030*/ 	.byte	0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+          /*0040*/ 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+          /*0048*/ 	.dword	_Z14hell_from__gpuv
+          /*0050*/ 	.byte	0xf0, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x04, 0x00, 0x00, 0x00, 0x04, 0x08, 0x00
+          /*0060*/ 	.byte	0x00, 0x00, 0x0c, 0x81, 0x80, 0x80, 0x28, 0x18, 0x04, 0x44, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+  
+  
+// --------------------- .nv.info                         --------------------------
+	.section	.nv.info,"",@"SHT_CUDA_INFO"
+	.__section_name         0x29 	// offset in .shstrtab
+	.__section_type         1879048192
+	.__section_flags        0x0
+	.__section_addr         0x0
+	.__section_offset       0x420 	// maybe updated by assembler
+	.__section_size         0x30 	// maybe updated by assembler
+	.__section_link         3
+	.__section_info         0x0
+	.__section_entsize      0
+	.align                4 	// equivalent to set sh_addralign
+  	.align	4
+  
+  
+  	//----- nvinfo : EIATTR_REGCOUNT
+  	.align		4
+          /*0000*/ 	.byte	0x04, 0x2f
+          /*0002*/ 	.short	(.L_3 - .L_2)
+  	.align		4
+  .L_2:
+          /*0004*/ 	.word	index@(_Z14hell_from__gpuv)
+          /*0008*/ 	.word	0x00000018
+  
+  
+  	//----- nvinfo : EIATTR_MAX_STACK_SIZE
+  	.align		4
+  .L_3:
+          /*000c*/ 	.byte	0x04, 0x23
+          /*000e*/ 	.short	(.L_5 - .L_4)
+  	.align		4
+  .L_4:
+          /*0010*/ 	.word	index@(_Z14hell_from__gpuv)
+          /*0014*/ 	.word	0x00000000
+  
+  
+  	//----- nvinfo : EIATTR_MIN_STACK_SIZE
+  	.align		4
+  .L_5:
+          /*0018*/ 	.byte	0x04, 0x12
+          /*001a*/ 	.short	(.L_7 - .L_6)
+  	.align		4
+  .L_6:
+          /*001c*/ 	.word	index@(_Z14hell_from__gpuv)
+          /*0020*/ 	.word	0x00000018
+  
+  
+  	//----- nvinfo : EIATTR_FRAME_SIZE
+  	.align		4
+  .L_7:
+          /*0024*/ 	.byte	0x04, 0x11
+          /*0026*/ 	.short	(.L_9 - .L_8)
+  	.align		4
+  .L_8:
+          /*0028*/ 	.word	index@(_Z14hell_from__gpuv)
+          /*002c*/ 	.word	0x00000018
+  .L_9:
+  
+  
+// --------------------- .nv.info._Z14hell_from__gpuv     --------------------------
+	.section	.nv.info._Z14hell_from__gpuv,"",@"SHT_CUDA_INFO"
+	.__section_name         0x4c 	// offset in .shstrtab
+	.__section_type         1879048192
+	.__section_flags        0x0
+	.__section_addr         0x0
+	.__section_offset       0x450 	// maybe updated by assembler
+	.__section_size         0x24 	// maybe updated by assembler
+	.__section_link         3
+	.__section_info         0xc
+	.__section_entsize      0
+	.align                4 	// equivalent to set sh_addralign
+  	.align	4
+  
+  
+  	//----- nvinfo : EIATTR_CUDA_API_VERSION
+  	.align		4
+          /*0000*/ 	.byte	0x04, 0x37
+          /*0002*/ 	.short	(.L_11 - .L_10)
+  .L_10:
+          /*0004*/ 	.word	0x00000075
+  
+  
+  	//----- nvinfo : EIATTR_SW2861232_WAR
+  	.align		4
+  .L_11:
+          /*0008*/ 	.byte	0x01, 0x35
+  	.zero		2
+  
+  
+  	//----- nvinfo : EIATTR_MAXREG_COUNT
+  	.align		4
+          /*000c*/ 	.byte	0x03, 0x1b
+          /*000e*/ 	.short	0x00ff
+  
+  
+  	//----- nvinfo : EIATTR_EXTERNS
+  	.align		4
+          /*0010*/ 	.byte	0x04, 0x0f
+          /*0012*/ 	.short	(.L_13 - .L_12)
+  
+  
+  	//   ....[0]....
+  	.align		4
+  .L_12:
+          /*0014*/ 	.word	index@(vprintf)
+  
+  
+  	//----- nvinfo : EIATTR_EXIT_INSTR_OFFSETS
+  	.align		4
+  .L_13:
+          /*0018*/ 	.byte	0x04, 0x1c
+          /*001a*/ 	.short	(.L_15 - .L_14)
+  
+  
+  	//   ....[0]....
+  .L_14:
+          /*001c*/ 	.word	0x00000140
+  
+  
+  	//----- nvinfo : EIATTR_CTAIDZ_USED
+  	.align		4
+  .L_15:
+          /*0020*/ 	.byte	0x01, 0x04
+  	.zero		2
+  
+  
+// --------------------- .nv.rel.action                   --------------------------
+	.section	.nv.rel.action,"",@"SHT_CUDA_RELOCINFO"
+	.__section_name         0x127 	// offset in .shstrtab
+	.__section_type         1879048203
+	.__section_flags        0x0
+	.__section_addr         0x0
+	.__section_offset       0x478 	// maybe updated by assembler
+	.__section_size         0xe0 	// maybe updated by assembler
+	.__section_link         0
+	.__section_info         0x0
+	.__section_entsize      8
+	.align                8 	// equivalent to set sh_addralign
+  	.align	8
+  	.sectionentsize	8
+          /*0000*/ 	.byte	0x4b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x02, 0x08, 0x10, 0x0a, 0x2f, 0x22
+          /*0010*/ 	.byte	0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*0020*/ 	.byte	0x00, 0x00, 0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*0030*/ 	.byte	0x00, 0x00, 0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x28, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*0040*/ 	.byte	0x00, 0x00, 0x30, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*0050*/ 	.byte	0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x08, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*0060*/ 	.byte	0x01, 0x00, 0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x18, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*0070*/ 	.byte	0x01, 0x00, 0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x28, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*0080*/ 	.byte	0x01, 0x00, 0x30, 0x08, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x38, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*0090*/ 	.byte	0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x08, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*00a0*/ 	.byte	0x02, 0x00, 0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x18, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*00b0*/ 	.byte	0x02, 0x00, 0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x28, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*00c0*/ 	.byte	0x02, 0x00, 0x30, 0x08, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x38, 0x08, 0x00, 0x00, 0x00, 0x00
+          /*00d0*/ 	.byte	0x00, 0x00, 0x00, 0x14, 0x2c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x0c, 0x00, 0x00, 0x00, 0x00
+  
+  
+// --------------------- .rel.text._Z14hell_from__gpuv    --------------------------
+	.section  ".rel.text._Z14hell_from__gpuv", 0, SHT_REL
+	// all relocation sections will be dynamically generated by assembler 
+	// but most of the section header will be kept as is.
+	.__section_name         0x98 	// offset in .shstrtab
+	.__section_type         SHT_REL
+	.__section_flags        0x0
+	.__section_addr         0x0
+	.__section_offset       0x558 	// maybe updated by assembler
+	.__section_size         0x30 	// maybe updated by assembler
+	.__section_link         3
+	.__section_info         0xc
+	.__section_entsize      16
+	.align                8 	// equivalent to set sh_addralign
+    // Relocation[0] : vprintf, Container({'r_offset': 304, 'r_info': 34359738426, 'r_info_sym': 8, 'r_info_type': 58})
+    // Relocation[1] : $str, Container({'r_offset': 96, 'r_info': 12884901945, 'r_info_sym': 3, 'r_info_type': 57})
+    // Relocation[2] : $str, Container({'r_offset': 48, 'r_info': 12884901944, 'r_info_sym': 3, 'r_info_type': 56})
+
+// --------------------- .rela.text._Z14hell_from__gpuv   --------------------------
+	.section  ".rela.text._Z14hell_from__gpuv", 0, SHT_RELA
+	// all relocation sections will be dynamically generated by assembler 
+	// but most of the section header will be kept as is.
+	.__section_name         0xb6 	// offset in .shstrtab
+	.__section_type         SHT_RELA
+	.__section_flags        0x0
+	.__section_addr         0x0
+	.__section_offset       0x588 	// maybe updated by assembler
+	.__section_size         0x30 	// maybe updated by assembler
+	.__section_link         3
+	.__section_info         0xc
+	.__section_entsize      24
+	.align                8 	// equivalent to set sh_addralign
+    // Relocation[0] : _Z14hell_from__gpuv, Container({'r_offset': 288, 'r_info': 30064771129, 'r_info_sym': 7, 'r_info_type': 57, 'r_addend': 320})
+    // Relocation[1] : _Z14hell_from__gpuv, Container({'r_offset': 272, 'r_info': 30064771128, 'r_info_sym': 7, 'r_info_type': 56, 'r_addend': 320})
+
+// --------------------- .rel.debug_frame                 --------------------------
+	.section  ".rel.debug_frame", 0, SHT_REL
+	// all relocation sections will be dynamically generated by assembler 
+	// but most of the section header will be kept as is.
+	.__section_name         0x104 	// offset in .shstrtab
+	.__section_type         SHT_REL
+	.__section_flags        0x0
+	.__section_addr         0x0
+	.__section_offset       0x5b8 	// maybe updated by assembler
+	.__section_size         0x10 	// maybe updated by assembler
+	.__section_link         3
+	.__section_info         0x4
+	.__section_entsize      16
+	.align                8 	// equivalent to set sh_addralign
+    // Relocation[0] : _Z14hell_from__gpuv, Container({'r_offset': 72, 'r_info': 30064771074, 'r_info_sym': 7, 'r_info_type': 2})
+
+// --------------------- .nv.constant0._Z14hell_from__gpuv --------------------------
+	.section	.nv.constant0._Z14hell_from__gpuv,"a",@progbits
+	.__section_name         0xd5 	// offset in .shstrtab
+	.__section_type         SHT_PROGBITS
+	.__section_flags        0x2
+	.__section_addr         0x0
+	.__section_offset       0x5c8 	// maybe updated by assembler
+	.__section_size         0x160 	// maybe updated by assembler
+	.__section_link         0
+	.__section_info         0xc
+	.__section_entsize      0
+	.align                4 	// equivalent to set sh_addralign
+  	.align	4
+  .nv.constant0._Z14hell_from__gpuv:
+  	.zero		352
+  
+  
+// --------------------- .text._Z14hell_from__gpuv        --------------------------
+	.section	.text._Z14hell_from__gpuv,"ax",@progbits
+	.__section_name         0x32 	// offset in .shstrtab
+	.__section_type         SHT_PROGBITS
+	.__section_flags        0x6
+	.__section_addr         0x0
+	.__section_offset       0x780 	// maybe updated by assembler
+	.__section_size         0x200 	// maybe updated by assembler
+	.__section_link         3
+	.__section_info         0x18000007
+	.__section_entsize      0
+	.align                128 	// equivalent to set sh_addralign
+  	.sectioninfo	@"SHI_REGISTERS=24"
+  	.align	128
+          .global         _Z14hell_from__gpuv
+          .type           _Z14hell_from__gpuv,@function
+          .size           _Z14hell_from__gpuv,(.L_x_2 - _Z14hell_from__gpuv)
+          .other          _Z14hell_from__gpuv,@"STO_CUDA_ENTRY STV_DEFAULT"
+  _Z14hell_from__gpuv:
+  .text._Z14hell_from__gpuv:
+      [B------:R-:W-:Y:S04]         /*0000*/                   IMAD.MOV.U32 R1, RZ, RZ, c[0x0][0x28] ;
+      [B------:R-:W0:-:S01]         /*0010*/                   S2R R3, SR_CTAID.Y ;
+      [B------:R-:W-:-:S01]         /*0020*/                   IADD3 R1, R1, -0x18, RZ ;
+      [B------:R-:W-:-:S02]         /*0030*/                   UMOV UR4, 32@lo($str) ;
+      [B------:R-:W0:-:S01]         /*0040*/                   S2R R2, SR_CTAID.X ;
+      [B------:R-:W-:-:S01]         /*0050*/                   IADD3 R6, P0, R1, c[0x0][0x20], RZ ;
+      [B------:R-:W-:-:S01]         /*0060*/                   UMOV UR5, 32@hi($str) ;
+      [B------:R-:W-:-:S01]         /*0070*/                   IMAD.U32 R4, RZ, RZ, UR4 ;
+      [B------:R-:W1:-:S01]         /*0080*/                   S2R R9, SR_TID.X ;
+      [B------:R-:W-:-:S02]         /*0090*/                   IMAD.U32 R5, RZ, RZ, UR5 ;
+      [B------:R-:W-:-:S01]         /*00a0*/                   IMAD.X R7, RZ, RZ, c[0x0][0x24], P0 ;
+      [B------:R-:W1:-:S04]         /*00b0*/                   S2R R8, SR_CTAID.Z ;
+      [B------:R-:W2:-:S04]         /*00c0*/                   S2R R11, SR_TID.Z ;
+      [B------:R-:W2:-:S04]         /*00d0*/                   S2R R10, SR_TID.Y ;
+      [B0-----:R0:W-:-:S04]         /*00e0*/                   STL.64 [R1], R2 ;
+      [B-1----:R0:W-:-:S04]         /*00f0*/                   STL.64 [R1+0x8], R8 ;
+      [B--2---:R0:W-:-:S02]         /*0100*/                   STL.64 [R1+0x10], R10 ;
+      [B------:R-:W-:-:S02]         /*0110*/                   MOV R20, 32@lo((_Z14hell_from__gpuv + .L_x_0@srel)) ;
+      [B------:R-:W-:Y:S04]         /*0120*/                   MOV R21, 32@hi((_Z14hell_from__gpuv + .L_x_0@srel)) ;
+      [B0-----:R-:W-:-:S05]         /*0130*/                   CALL.ABS.NOINC `(vprintf) ;
+  .L_x_0:
+      [B------:R-:W-:-:S05]         /*0140*/                   EXIT ;
+  .L_x_1:
+      [B------:R-:W-:Y:S00]         /*0150*/                   BRA `(.L_x_1);
+      [B------:R-:W-:Y:S00]         /*0160*/                   NOP;
+      [B------:R-:W-:Y:S00]         /*0170*/                   NOP;
+      [B------:R-:W-:Y:S00]         /*0180*/                   NOP;
+      [B------:R-:W-:Y:S00]         /*0190*/                   NOP;
+      [B------:R-:W-:Y:S00]         /*01a0*/                   NOP;
+      [B------:R-:W-:Y:S00]         /*01b0*/                   NOP;
+      [B------:R-:W-:Y:S00]         /*01c0*/                   NOP;
+      [B------:R-:W-:Y:S00]         /*01d0*/                   NOP;
+      [B------:R-:W-:Y:S00]         /*01e0*/                   NOP;
+      [B------:R-:W-:Y:S00]         /*01f0*/                   NOP;
+  .L_x_2:
+  
+  
+
+// --------------------- .nv.global.init                  --------------------------
+	.section	.nv.global.init,"aw",@progbits
+	.__section_name         0x88 	// offset in .shstrtab
+	.__section_type         SHT_PROGBITS
+	.__section_flags        0x3
+	.__section_addr         0x0
+	.__section_offset       0x980 	// maybe updated by assembler
+	.__section_size         0x3b 	// maybe updated by assembler
+	.__section_link         0
+	.__section_info         0x0
+	.__section_entsize      0
+	.align                1 	// equivalent to set sh_addralign
+  .nv.global.init:
+  	.type		$str,@object
+  	.size		$str,(.L_1 - $str)
+  $str:
+          /*0000*/ 	.byte	0x67, 0x70, 0x75, 0x3a, 0x20, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x77, 0x6f, 0x72, 0x6c, 0x64
+          /*0010*/ 	.byte	0x21, 0x20, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x28, 0x25, 0x64, 0x2c, 0x20, 0x25, 0x64, 0x2c, 0x20
+          /*0020*/ 	.byte	0x25, 0x64, 0x29, 0x20, 0x2d, 0x2d, 0x20, 0x74, 0x68, 0x72, 0x65, 0x61, 0x64, 0x28, 0x25, 0x64
+          /*0030*/ 	.byte	0x2c, 0x20, 0x25, 0x64, 0x2c, 0x20, 0x25, 0x64, 0x29, 0x0a, 0x00
+  .L_1:
+  
+  
+  //--------------------- SYMBOLS --------------------------
+  
+  	.type		vprintf,@function
+  //-------------------------------------------------
+  //---------------- END of sections ----------------
+  //-------------------------------------------------
+
+
+
+  //-------------------------------------------------
+  //---------------- END of segments ----------------
+  //-------------------------------------------------
+
+
